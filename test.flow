@@ -1,0 +1,56 @@
+%%{init: {'flowchart': {'nodeSpacing': 50, 'rankSpacing': 50}}}%%
+flowchart LR
+    %% Définition des styles
+    classDef central fill:#f96,stroke:#333,stroke-width:2px,color:#000;
+    classDef selfhosted fill:#69f,stroke:#333,stroke-width:2px,color:#fff;
+    classDef auth fill:#ff9,stroke:#333,stroke-width:2px,color:#000;
+
+    %% Application Centrale
+    subgraph AC[Application Centrale]
+        direction TB
+        A[Interface Utilisateur\n(Compte Principal)]:::central
+        B[Serveur Central]:::central
+        C[Service de messagerie/appel]:::central
+        D[Service utilisateur]:::central
+    end
+    A --> B
+    B --> C
+    B --> D
+
+    %% Serveur Auto-Hébergé
+    subgraph SH[Serveur Auto-Hébergé]
+        direction LR
+
+        %% Configuration Simple (sans comptes locaux)
+        subgraph Simple[Configuration Simple\n(sans comptes locaux)]
+            direction TB
+            E[Interface Web Locale (Simple)]:::selfhosted
+            F[Server]:::selfhosted
+        end
+
+        %% Configuration avec Comptes Locaux (LDAP)
+        subgraph LDAP[Configuration avec Comptes Locaux\n(avec LDAP)]
+            direction TB
+            G[Interface Web Locale (Dédiée)]:::selfhosted
+            H[Authentification LDAP]:::auth
+            I[Connexion Compte Local]:::selfhosted
+            J[Server]:::selfhosted
+        end
+    end
+
+    %% Connexions depuis l'Application Centrale
+    A -.->|Ajout serveur (Simple)| E
+    E --> F
+
+    A -.->|Ajout serveur (avec comptes locaux)| G
+    G --> H
+    H --> I
+    I --> J
+
+    %% Légende
+    subgraph L[Légende]
+        direction LR
+        LC[Application Centrale]:::central
+        LSH[Serveur Auto-Hébergé]:::selfhosted
+        LA[Authentification LDAP]:::auth
+    end

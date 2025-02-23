@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --chat-dark: #0a0f2d;
+  --chat-darker: #060b24;
+  --chat-light: #1a1f3d;
+  --accent: #00f5d4;
+  --gradient-start: #00f5d4;
+  --gradient-end: #4264fb;
+}
+
+/* Styles de base */
+html{  background-color: var(--chat-dark);}
+
+body {
+  background-color: var(--chat-dark);
+  color: #e5e7eb; /* Equivalent to text-gray-200 */
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top right, rgba(0, 245, 212, 0.1), transparent 40%),
+             radial-gradient(circle at bottom left, rgba(66, 100, 251, 0.1), transparent 40%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Masquer la barre de défilement */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Effet verre */
+.glass-effect {
+  @apply bg-opacity-20 backdrop-blur-lg bg-chat-light border border-gray-600/10;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Effet hover */
+.hover-effect {
+  @apply transition-all duration-300;
+  &:hover {
+    @apply scale-[1.02];
+    box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+  }
+}
+
+/* Texte avec dégradé */
+.gradient-text {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Bordure néon */
+.neon-border {
+  box-shadow: 0 0 10px rgba(0, 245, 212, 0.2),
+              inset 0 0 10px rgba(0, 245, 212, 0.1);
+}
+
+/* Styles spécifiques pour mobile */
+@media (max-width: 640px) {
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-chat-darker p-4 z-50;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-nav-spacer {
+    height: 4.5rem;
+  }
+
+  .mobile-input {
+    @apply fixed bottom-0 left-0 right-0 bg-chat-darker p-4 z-50;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-content {
+    @apply pb-20;
+  }
+
+  .mobile-button {
+    @apply active:scale-95 transition-transform;
+  }
+}
+
+/* Animations */
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Amélioration du touch sur mobile */
+@media (hover: none) {
+  .hover-effect {
+    @apply active:scale-[1.02] transition-transform;
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+/* Styles pour les boutons tactiles */
+.touch-button {
+  @apply active:scale-95 transition-transform;
+  touch-action: manipulation;
+}
+
+/* Optimisation de la taille des éléments tactiles */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px];
+}
